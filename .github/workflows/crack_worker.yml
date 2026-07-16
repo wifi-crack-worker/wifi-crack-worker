@@ -1,0 +1,31 @@
+name: WiFi Crack Worker
+
+on:
+  schedule:
+    # Toutes les 10 minutes
+    - cron: '*/10 * * * *'
+  workflow_dispatch:  # Permet de lancer manuellement
+
+jobs:
+  crack:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y aircrack-ng crunch jq curl
+        # Télécharger rockyou si pas présent
+        if [ ! -f /usr/share/wordlists/rockyou.txt ]; then
+          sudo mkdir -p /usr/share/wordlists
+          sudo wget -q -O /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+          sudo gunzip -c /tmp/rockyou.txt.gz | sudo head -n 100000 > /usr/share/wordlists/rockyou.txt
+        fi
+        
+    - name: Run crack worker
+      run: |
+        chmod +x crack.sh
+        ./crack.sh
