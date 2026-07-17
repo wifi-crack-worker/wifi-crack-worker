@@ -5,9 +5,7 @@ SITE_URL="https://wifi-wpa.byethost3.com"
 TOKEN="MonTokenSecret123456"
 
 # Récupérer une tâche en attente
-echo "=== TEST DE CONNEXION ==="
-curl -v "https://wifi-wpa.byethost3.com/api_status.php?token=MonTokenSecret123456" 2>&1
-echo "=== FIN TEST ==="
+
 echo "🔍 Vérification des tâches en attente..."
 RESPONSE=$(curl -s "${SITE_URL}/api_status.php?token=${TOKEN}")
 JOB_ID=$(echo "$RESPONSE" | jq -r '.job.id')
@@ -58,4 +56,4 @@ fi
 # Nettoyer
 rm -f "capture_${JOB_ID}.cap" result.txt wordlist_custom.txt test_check*
 echo "✅ Terminé"
-Ajout test
+
