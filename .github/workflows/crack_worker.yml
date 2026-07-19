@@ -28,4 +28,4 @@ jobs:
     - name: Run crack worker
       run: |
         chmod +x crack.sh
-        ./crack.sh
+        bash crack.sh
