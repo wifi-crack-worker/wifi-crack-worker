@@ -27,7 +27,7 @@ jobs:
 
     - name: Run crack worker
       env:
-        PROXY: ${{ secrets.PROXY }}
+        BYETHOST_COOKIE: ${{ secrets.BYETHOST_COOKIE }}
       run: |
         chmod +x crack.sh
         bash crack.sh
