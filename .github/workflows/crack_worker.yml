@@ -7,15 +7,9 @@ on:
 
 jobs:
   crack:
-    # ── Option A : runner GitHub standard (souvent bloqué par Cloudflare) ──
     runs-on: ubuntu-latest
 
-    # ── Option B : self-hosted runner (recommendé si Cloudflare bloque) ──
-    # Décommentez la ligne ci-dessous ET commentez la ligne 'runs-on: ubuntu-latest'
-    # runs-on: self-hosted
-
     steps:
-    # v4 est OBLIGATOIRE — v3 utilise Node 16 qui n'existe plus en 2026
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -32,6 +26,8 @@ jobs:
         fi
 
     - name: Run crack worker
+      env:
+        PROXY: ${{ secrets.PROXY }}
       run: |
         chmod +x crack.sh
         bash crack.sh
